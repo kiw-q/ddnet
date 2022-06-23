@@ -417,6 +417,19 @@ void CMenus::RenderServerInfo(CUIRect MainView)
 
 	{
 		CUIRect Button;
+		ServerInfo.HSplitBottom(20.0f, &ServerInfo, &Button);
+		Button.VSplitRight(200.0f, &ServerInfo, &Button);
+		static int s_AddFavButton = 0;
+		if(DoButton_Menu(&s_AddFavButton, Localize("Copy Serverinfo"), 0, &Button))
+		{
+			mem_zero(aBuf, sizeof(aBuf));
+			str_format(aBuf, sizeof(aBuf), "%s\n%s", CurrentServerInfo.m_aName, CurrentServerInfo.m_aAddress);
+			Input()->SetClipboardText(aBuf);
+		}
+	}
+
+	{
+		CUIRect Button;
 		int IsFavorite = ServerBrowser()->IsFavorite(CurrentServerInfo.m_NetAddr);
 		ServerInfo.HSplitBottom(20.0f, &ServerInfo, &Button);
 		static int s_AddFavButton = 0;

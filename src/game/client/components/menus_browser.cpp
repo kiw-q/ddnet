@@ -1073,6 +1073,19 @@ void CMenus::RenderServerbrowserServerDetail(CUIRect View)
 			ButtonAddFav.VSplitLeft(5.0f, 0, &ButtonAddFav);
 			static int s_AddFavButton = 0;
 			static int s_LeakIpButton = 0;
+
+			{
+
+				ServerDetails.HSplitBottom(20.0f, &ServerDetails, &Button);
+				static int s_AddCopyButton = 0;
+				if(DoButton_Menu(&s_AddCopyButton, Localize("Copy Serverinfo"), 0, &Button))
+				{
+					char aBuf[128];
+					str_format(aBuf, sizeof(aBuf), "%s\n%s", pSelectedServer->m_aName, pSelectedServer->m_aAddress);
+					Input()->SetClipboardText(aBuf);
+				}
+			}
+
 			if(DoButton_CheckBox(&s_AddFavButton, Localize("Favorite"), pSelectedServer->m_Favorite, &ButtonAddFav))
 			{
 				if(pSelectedServer->m_Favorite)
